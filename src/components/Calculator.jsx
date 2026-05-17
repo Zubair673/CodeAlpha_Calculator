@@ -24,13 +24,13 @@ function Calculator() {
   };
 
   const calculateResult = useCallback(() => {
-    try {
-      const result = Function(`"use strict"; return (${input})`)();
-      setInput(result.toString());
-    } catch {
-      setInput("Error");
-    }
-  }, [input]);
+  try {
+    const result = eval(input);
+    setInput(result.toString());
+  } catch {
+    setInput("Error");
+  }
+}, [input]);
 
   useEffect(() => {
     const handleKeyPress = (event) => {
