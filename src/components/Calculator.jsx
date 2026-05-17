@@ -25,13 +25,12 @@ function Calculator() {
 
   const calculateResult = useCallback(() => {
   try {
-    const result = eval(input);
+    const result = eval(input || "0");
     setInput(result.toString());
   } catch {
     setInput("Error");
   }
 }, [input]);
-
   useEffect(() => {
     const handleKeyPress = (event) => {
       const key = event.key;
