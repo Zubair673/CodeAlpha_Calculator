@@ -33,25 +33,26 @@ function Calculator() {
 
   const calculateResult = () => {
 
-    try {
+  try {
 
-      // eslint-disable-next-line no-new-func
-      const result = new Function(
-        "return " + (input || "0")
-      )();
+    const expression = input
+      .replace(/÷/g, "/")
+      .replace(/×/g, "*");
 
-      setInput(result.toString());
+    // eslint-disable-next-line no-eval
+    const result = eval(expression);
 
-    }
+    setInput(result.toString());
 
-    catch {
+  }
 
-      setInput("Error");
+  catch {
 
-    }
+    setInput("Error");
 
-  };
+  }
 
+};
   useEffect(() => {
 
     const handleKeyPress = (event) => {
