@@ -1,5 +1,7 @@
+/* eslint-disable no-eval */
+
 import "./Calculator.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 function Calculator() {
 
@@ -28,31 +30,33 @@ function Calculator() {
   };
 
   const deleteLast = () => {
+
     setInput((prev) => prev.slice(0, -1));
+
   };
 
-  const calculateResult = () => {
+  const calculateResult = useCallback(() => {
 
-  try {
+    try {
 
-    const expression = input
-      .replace(/÷/g, "/")
-      .replace(/×/g, "*");
+      const expression = input
+        .replace(/÷/g, "/")
+        .replace(/×/g, "*");
 
-    // eslint-disable-next-line no-eval
-    const result = eval(expression);
+      const result = eval(expression || "0");
 
-    setInput(result.toString());
+      setInput(result.toString());
 
-  }
+    }
 
-  catch {
+    catch {
 
-    setInput("Error");
+      setInput("Error");
 
-  }
+    }
 
-};
+  }, [input]);
+
   useEffect(() => {
 
     const handleKeyPress = (event) => {
@@ -108,7 +112,7 @@ function Calculator() {
 
     };
 
-  }, [input]);
+  }, [calculateResult]);
 
   return (
 
@@ -209,6 +213,7 @@ function Calculator() {
     </div>
 
   );
+
 }
 
 export default Calculator;
